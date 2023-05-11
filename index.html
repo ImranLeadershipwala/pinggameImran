@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Ping Game</title>
+</head>
+<body>
+	<h1>Ping Game</h1>
+	<p>Click the button as fast as you can!</p>
+
+	<button onclick="playGame()">Start Game</button>
+
+	<p>Attempts left: <span id="attempts">3</span></p>
+
+	<p>Score: <span id="score">0</span></p>
+
+	<script>
+		let attemptsLeft = 3;
+		let score = 0;
+		let time = 0;
+		let timerInterval;
+
+		function playGame() {
+			document.querySelector("button").style.display = "none";
+			document.querySelector("#attempts").textContent = attemptsLeft;
+
+			// Add event listener to the button
+			document.querySelector("button").addEventListener("click", increaseScore);
+
+			// Start the timer
+			timerInterval = setInterval(increaseTime, 10);
+		}
+
+		function increaseScore() {
+			score++;
+			document.querySelector("#score").textContent = score;
+
+			if (score >= 10) {
+				endGame();
+			}
+		}
+
+		function increaseTime() {
+			time += 10;
+		}
+
+		function endGame() {
+			clearInterval(timerInterval);
+			document.querySelector("button").style.display = "block";
+			document.querySelector("button").removeEventListener("click", increaseScore);
+
+			attemptsLeft--;
+			document.querySelector("#attempts").textContent = attemptsLeft;
+
+			score = 0;
+			document.querySelector("#score").textContent = score;
+
+			time = 0;
+
+			if (attemptsLeft == 0) {
+				alert("Game Over!");
+				document.querySelector("button").style.display = "none";
+			}
+		}
+	</script>
+</body>
+</html>
